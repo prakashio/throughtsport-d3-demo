@@ -107,3 +107,104 @@ export const LineChart = function (
 
   return svg.node();
 };
+
+export const LineChart2 = function (data, options) {
+  let {
+    x = (d, i) => i,
+    y = (d) => d,
+    title,
+    marginTop = 20,
+    marginRight = 0,
+    marginBottom = 30,
+    marginLeft = 40,
+    width = 640,
+    height = 400,
+    xDomain,
+    xRange = [marginLeft, width - marginRight],
+    yDomain,
+    yRange = [height - marginBottom, marginTop],
+    yType = d3.scaleLinear,
+    xPadding = 0.1,
+    yFormat,
+    yLabel,
+    color = "currentColor",
+    unit = "",
+  } = options;
+
+  const X = d3.map(data, x);
+  const Y = d3.map(data, y);
+
+  if (xDomain === undefined) xDomain = X;
+  if (yDomain === undefined) yDomain = [0, d3.max(Y)];
+  xDomain = new d3.InternSet(xDomain);
+
+  const I = d3.range(X.length).filter((i) => xDomain.has(X[i]));
+
+  const xScale = d3.scaleBand(xDomain, xRange).padding(xPadding);
+  const yScale = yType(yDomain, yRange);
+  const xAxis = d3.axisBottom(xScale).tickSizeOuter(0);
+  const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
+
+  if (title === undefined) {
+    const formatValue = yScale.tickFormat(100, yFormat);
+    title = (i) => `${X[i]}\n${formatValue(Y[i])}${unit}`;
+  } else {
+    const O = d3.map(data, (d) => d);
+    // const T = title;
+    // title = (i) => T(O[i], i, data);
+  }
+
+  const svg = d3
+    .create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("id", "chart")
+    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+
+  const line = d3
+    .line()
+    .x((d, i) => xScale(x(d, i)) + xScale.bandwidth() / 2)
+    .y((d, i) => yScale(y(d, i)));
+
+  svg
+    .append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(yAxis)
+    .call((g) => g.select(".domain").remove())
+    .call((g) =>
+      g
+        .selectAll(".tick line")
+        .clone()
+        .attr("x2", width - marginLeft - marginRight)
+        .attr("stroke-opacity", 0.1)
+    )
+    .call((g) =>
+      g
+        .append("text")
+        .attr("x", -marginLeft)
+        .attr("y", 10)
+        .attr("fill", "currentColor")
+        .attr("text-anchor", "start")
+        .text(yLabel)
+    );
+
+  const path = svg
+    .append("g")
+    .attr("fill", "none")
+    .attr("stroke", color)
+    .attr("stroke-width", 1.5)
+    .selectAll("path")
+    .data([data])
+    .join("path")
+    .attr("d", line);
+
+  if (title) path.append("title").text(title);
+
+  svg
+    .append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(xAxis);
+
+  return svg.node();
+};

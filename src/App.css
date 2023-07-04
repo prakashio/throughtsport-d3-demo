@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.query-input {
+  width: 400px;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.query-submit {
+  display: block;
+  margin: auto;
+
+  height: 40px;
+  width: 200px;
+  background-color: #282c34;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: cadetblue;
+  }
+}
+
+.graph-container {
+  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
