@@ -1,0 +1,9 @@
+.select {
+  width: 220px;
+  height: 32px;
+  color: var(--color-primary);
+
+  padding: 0.25rem;
+  border-color: var(--color-gray-medium);
+  border-radius: 5px;
+}

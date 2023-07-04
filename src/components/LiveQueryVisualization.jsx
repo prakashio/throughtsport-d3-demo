@@ -2,25 +2,23 @@ import React, { useEffect, useState } from "react";
 import {
   getSearchData,
   tsLogin,
-} from "./utils/thoughtspot-rest-api-v1-helpers";
-import MultilineChart from "./MultilineChart";
+} from "../utils/thoughtspot-rest-api-v1-helpers";
+import MultilineChart from "./MultilineChart/MultilineChart";
+import DashboardFilters from "./DashboardFilters/DashboardFilters";
+import CardWrapper from "./Common/Card/Card";
 
 const tsURL = process.env.REACT_APP_TS_URL;
 const USER = process.env.REACT_APP_TS_USERNAME;
 const PASSWORD = process.env.REACT_APP_TS_PASSWORD;
 
-// const worksheetID = "cd252e5c-b552-49a8-821d-3eadaa049cca";
-const worksheetID = "b5ecc064-bfaf-4c31-9612-1927667f492b";
+// const worksheetID = "cd252e5c-b552-49a8-821d-3eadaa049cca"; // Sample Data
+// const worksheetID = "b5ecc064-bfaf-4c31-9612-1927667f492b"; // ACI
+const worksheetID = "4de2e208-b3d6-4746-a907-1d1e3a5e60f1"; // Stack overflow
 
 export default function LiveQueryVisualization() {
-  const [query, setQuery] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = new FormData(e.target);
-    const query = form.get("query");
-    setQuery(query);
-  };
+  const [filters, setFilters] = useState({
+    category: null,
+  });
 
   const [graphData, setGraphData] = useState({
     data: [],
@@ -45,42 +43,31 @@ export default function LiveQueryVisualization() {
     });
   };
 
+  const createQuery = (filters) => {
+    if (filters.category && filters.timePeriod) {
+      return `count [${filters.category}] [CREATION_DATE].${filters.timePeriod}`;
+    }
+
+    return null;
+  };
+
   useEffect(() => {
-    fetchData(query);
-  }, [query]);
+    const query = createQuery(filters);
+
+    if (query) {
+      fetchData(query);
+    }
+  }, [filters]);
 
   return (
     <>
+      <DashboardFilters setFilters={setFilters} />
       {isLoading && <div>...Loading chart</div>}
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="query"
-            id="query"
-            required
-            className="query-input"
-          />
-
-          <button className="query-submit" type="submit">
-            Submit Query
-          </button>
-
-          <ul>
-            <li>
-              <p>[Placement] [Media Spend] [Date]</p>
-            </li>
-            <li>
-              <p>[Placement] [Engagement] [Date]</p>
-            </li>
-            <li>
-              <p>[Placement] [Impressions] [Date]</p>
-            </li>
-          </ul>
-        </form>
-      </div>
-      <hr />
-      {graphData.data.length > 0 && <MultilineChart graphData={graphData} />}
+      {graphData.data.length > 0 && (
+        <CardWrapper>
+          <MultilineChart graphData={graphData} />
+        </CardWrapper>
+      )}
     </>
   );
 }

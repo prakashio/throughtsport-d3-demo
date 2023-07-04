@@ -1,0 +1,17 @@
+.filter__wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.filter__input-group {
+  > label {
+    text-align: left;
+    color: var(--color-gray);
+
+    margin-bottom: 0.2rem;
+
+    display: block;
+    font-size: 14px;
+  }
+}

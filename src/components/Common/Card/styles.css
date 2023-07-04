@@ -1,0 +1,8 @@
+.card-wrapper {
+  box-shadow: 0 0 4px rgba(25, 35, 49, 0.1), 0 2px 4px rgba(25, 35, 49, 0.04);
+  background-color: #fff;
+  border-radius: 0.5714285714rem;
+
+  padding: 1rem;
+  margin: 1rem;
+}
