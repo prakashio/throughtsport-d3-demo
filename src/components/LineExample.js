@@ -4,7 +4,7 @@ import {
   tsLogin,
 } from "./utils/thoughtspot-rest-api-v1-helpers";
 import { LineChart } from "./utils/d3-helpers";
-import * as d3 from "https://cdn.skypack.dev/d3@7";
+import * as d3 from "d3";
 
 const tsURL = process.env.REACT_APP_TS_URL;
 const USER = process.env.REACT_APP_TS_USERNAME;
