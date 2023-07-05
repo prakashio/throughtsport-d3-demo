@@ -5,8 +5,14 @@ import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
-    <div className="App my-16">
-      <h1 className="text-3xl">ThoughtSpot + Custom D3 Graphs</h1>
+    <div className="App my-4">
+      <header>
+        <img
+          src="./logo.png"
+          alt="stack-overflow"
+          className="w-24 bg-cyan-950 h-24 ml-4 rounded-lg shadow-xl"
+        />
+      </header>
       <Routes>
         <Route path="" element={<LiveQueryVisualization />} />
         <Route path="/dashboard" element={<Dashboard />} />

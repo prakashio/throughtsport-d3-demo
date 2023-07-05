@@ -34,11 +34,17 @@
   }
 }
 
+.circle {
+  cursor: pointer;
+}
+
 .graph-tooltip {
+  border-radius: 5px;
+  border: 2px solid var(--primary-color);
   background-color: #222831;
   color: white;
   font-size: 14px;
-  padding: 0.25rem;
+  padding: 0.5rem;
 
   > p {
     margin: 0;
