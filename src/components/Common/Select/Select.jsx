@@ -1,8 +1,6 @@
-import "./styles.css";
-
 const Select = ({ options, className, ...delegated }) => {
   return (
-    <select {...delegated} className={`${className} select`}>
+    <select {...delegated} className={`${className} border rounded w-60 h-8`}>
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}

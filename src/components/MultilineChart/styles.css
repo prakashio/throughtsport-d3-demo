@@ -25,3 +25,22 @@
 .tick {
   color: #495464;
 }
+
+.line-path {
+  cursor: pointer;
+
+  &:hover {
+    stroke-width: 3;
+  }
+}
+
+.graph-tooltip {
+  background-color: #222831;
+  color: white;
+  font-size: 14px;
+  padding: 0.25rem;
+
+  > p {
+    margin: 0;
+  }
+}

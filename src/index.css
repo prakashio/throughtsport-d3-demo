@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   --color-primary: "#1E2022";
 
@@ -14,4 +18,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }

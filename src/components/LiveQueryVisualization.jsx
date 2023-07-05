@@ -61,10 +61,10 @@ export default function LiveQueryVisualization() {
 
   return (
     <>
-      <DashboardFilters setFilters={setFilters} />
       {isLoading && <div>...Loading chart</div>}
+      <DashboardFilters setFilters={setFilters} />
       {graphData.data.length > 0 && (
-        <CardWrapper>
+        <CardWrapper className="mt-4 w-1/2 mx-auto">
           <MultilineChart graphData={graphData} />
         </CardWrapper>
       )}
